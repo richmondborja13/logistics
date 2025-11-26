@@ -8,6 +8,8 @@ import FAQ from '@/components/landing/FAQ';
 import Pricing from '@/components/landing/Pricing';
 import Testimonials from '@/components/landing/Testimonials';
 import CaseStudies from '@/components/landing/CaseStudies';
+import Header from '@/components/landing/Header';
+import AnimatedSection from '@/components/landing/AnimatedSection';
 
 export const metadata: Metadata = {
   title: 'Ship Happpens | Your Trusted Supply Chain Partner',
@@ -17,16 +19,37 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Hero />
-      <About />
-      <Services />
-      <Pricing />
-      <CaseStudies />
-      <Testimonials />
-      <Blog />
-      <FAQ />
-      <Contact />
-    </main>
+    <>
+      <Header />
+      <main className="min-h-screen">
+        <AnimatedSection>
+          <Hero />
+        </AnimatedSection>
+      <AnimatedSection>
+        <About />
+      </AnimatedSection>
+      <AnimatedSection>
+        <Services />
+      </AnimatedSection>
+      <AnimatedSection>
+        <Pricing />
+      </AnimatedSection>
+      <AnimatedSection>
+        <CaseStudies />
+      </AnimatedSection>
+      <AnimatedSection>
+        <Testimonials />
+      </AnimatedSection>
+      <AnimatedSection>
+        <Blog />
+      </AnimatedSection>
+      <AnimatedSection>
+        <FAQ />
+      </AnimatedSection>
+      <AnimatedSection>
+        <Contact />
+      </AnimatedSection>
+      </main>
+    </>
   );
 }

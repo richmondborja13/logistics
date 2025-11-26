@@ -20,6 +20,7 @@ Integration Notes:
 - For additional integration, see README or API documentation.
 */
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import AnimatedSection from '@/components/landing/AnimatedSection';
 
 export default function Contact() {
   return (
@@ -34,119 +35,123 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="bg-white p-8 rounded-xl shadow-lg">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-              Send us a Message
-            </h3>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  required
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Send Message
-              </button>
-            </form>
-          </div>
-
-          <div className="space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <AnimatedSection direction="right">
             <div className="bg-white p-8 rounded-xl shadow-lg">
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                Contact Information
+                Send us a Message
               </h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <Phone className="w-6 h-6 text-blue-600 mt-1" />
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-medium text-gray-900">Phone</h4>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      required
+                    />
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <Mail className="w-6 h-6 text-blue-600 mt-1" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">Email</h4>
-                    <p className="text-gray-600">info@logisticscompany.com</p>
-                  </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
                 </div>
-                <div className="flex items-start gap-4">
-                  <MapPin className="w-6 h-6 text-blue-600 mt-1" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">Address</h4>
-                    <p className="text-gray-600">
-                      123 Logistics Way<br />
-                      Suite 100<br />
-                      New York, NY 10001
-                    </p>
-                  </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  ></textarea>
                 </div>
-                <div className="flex items-start gap-4">
-                  <Clock className="w-6 h-6 text-blue-600 mt-1" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">Business Hours</h4>
-                    <p className="text-gray-600">
-                      Monday - Friday: 9:00 AM - 6:00 PM<br />
-                      Saturday: 10:00 AM - 4:00 PM<br />
-                      Sunday: Closed
-                    </p>
+
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection direction="left" delay={100}>
+            <div className="space-y-8">
+              <div className="bg-white p-8 rounded-xl shadow-lg">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+                  Contact Information
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <Phone className="w-6 h-6 text-blue-600 mt-1" />
+                    <div>
+                      <h4 className="font-medium text-gray-900">Phone</h4>
+                      <p className="text-gray-600">+1 (555) 123-4567</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <Mail className="w-6 h-6 text-blue-600 mt-1" />
+                    <div>
+                      <h4 className="font-medium text-gray-900">Email</h4>
+                      <p className="text-gray-600">info@logisticscompany.com</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <MapPin className="w-6 h-6 text-blue-600 mt-1" />
+                    <div>
+                      <h4 className="font-medium text-gray-900">Address</h4>
+                      <p className="text-gray-600">
+                        123 Logistics Way<br />
+                        Suite 100<br />
+                        New York, NY 10001
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <Clock className="w-6 h-6 text-blue-600 mt-1" />
+                    <div>
+                      <h4 className="font-medium text-gray-900">Business Hours</h4>
+                      <p className="text-gray-600">
+                        Monday - Friday: 9:00 AM - 6:00 PM<br />
+                        Saturday: 10:00 AM - 4:00 PM<br />
+                        Sunday: Closed
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

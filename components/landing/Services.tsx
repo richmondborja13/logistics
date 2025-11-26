@@ -22,6 +22,7 @@ Integration Notes:
 'use client';
 
 import { Truck, Warehouse, Globe, Package, Route, Shield } from 'lucide-react';
+import AnimatedSection from '@/components/landing/AnimatedSection';
 
 const services = [
   {
@@ -71,20 +72,19 @@ export default function Services() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                <service.icon className="w-7 h-7 text-blue-600" />
+            <AnimatedSection key={service.title} delay={index * 120}>
+              <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 hover:-translate-y-1">
+                <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                  <service.icon className="w-7 h-7 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600">
+                  {service.description}
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                {service.title}
-              </h3>
-              <p className="text-gray-600">
-                {service.description}
-              </p>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

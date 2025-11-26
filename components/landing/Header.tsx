@@ -19,6 +19,7 @@ Integration Notes:
 - The Header can be reused or extended for other pages requiring navigation.
 - For additional integration, see README or API documentation.
 */
+"use client";
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 
@@ -84,9 +85,18 @@ export default function Header() {
     };
   }, [isDropdownOpen]);
 
-  // Helper for active link style
+  // Helper for active link style (only visual state, sizing handled in base classes)
   const activeLink =
-    'underline underline-offset-4 text-blue-200 font-semibold';
+    'bg-white text-blue-700 font-semibold shadow-sm';
+
+  const aboutLabel =
+    activeSection === 'case-studies'
+      ? 'Case Studies'
+      : activeSection === 'blog'
+      ? 'Blog'
+      : activeSection === 'testimonials'
+      ? 'Testimonials'
+      : 'About';
 
   return (
     <header className="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-900 to-blue-700 text-white shadow z-50">
@@ -123,34 +133,105 @@ export default function Header() {
         </button>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex gap-6">
-          <Link href="/#hero" className={`hover:underline underline-offset-4 hover:text-blue-200 transition-colors font-medium ${activeSection === 'hero' ? activeLink : ''}`}>Home</Link>
+        <div className="hidden lg:flex gap-4">
+          <Link
+            href="/#hero"
+            className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium ${
+              activeSection === 'hero' ? activeLink : 'text-white'
+            }`}
+          >
+            Home
+          </Link>
           
           {/* About Dropdown (click to open/close) */}
           <div className="relative" ref={dropdownRef}>
             <button
-              className={`hover:underline underline-offset-4 hover:text-blue-200 transition-colors font-medium flex items-center gap-1 focus:outline-none ${['about','case-studies','blog','testimonials'].includes(activeSection) ? activeLink : ''}`}
+              className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium flex items-center gap-1 focus:outline-none ${
+                ['about', 'case-studies', 'blog', 'testimonials'].includes(activeSection)
+                  ? activeLink
+                  : 'text-white'
+              }`}
               onClick={() => setIsDropdownOpen((open) => !open)}
               aria-expanded={isDropdownOpen}
             >
-              About
-              <svg className={`w-4 h-4 transform transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {aboutLabel}
+              <svg
+                className={`w-4 h-4 transform transition-transform duration-200 ${
+                  isDropdownOpen ? 'rotate-180' : 'rotate-0'
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            {isDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-                <Link href="/#about" className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${activeSection === 'about' ? 'font-semibold underline text-blue-600' : ''}`} onClick={() => setIsDropdownOpen(false)}>About Us</Link>
-                <Link href="/#case-studies" className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${activeSection === 'case-studies' ? 'font-semibold underline text-blue-600' : ''}`} onClick={() => setIsDropdownOpen(false)}>Case Studies</Link>
-                <Link href="/#blog" className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${activeSection === 'blog' ? 'font-semibold underline text-blue-600' : ''}`} onClick={() => setIsDropdownOpen(false)}>Blog</Link>
-                <Link href="/#testimonials" className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${activeSection === 'testimonials' ? 'font-semibold underline text-blue-600' : ''}`} onClick={() => setIsDropdownOpen(false)}>Testimonials</Link>
-              </div>
-            )}
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                  <Link
+                    href="/#about"
+                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
+                      activeSection === 'about' ? 'font-semibold underline text-blue-600' : ''
+                    }`}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    About
+                  </Link>
+                  <Link
+                    href="/#case-studies"
+                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
+                      activeSection === 'case-studies' ? 'font-semibold underline text-blue-600' : ''
+                    }`}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    Case Studies
+                  </Link>
+                  <Link
+                    href="/#blog"
+                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
+                      activeSection === 'blog' ? 'font-semibold underline text-blue-600' : ''
+                    }`}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    Blog
+                  </Link>
+                  <Link
+                    href="/#testimonials"
+                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
+                      activeSection === 'testimonials' ? 'font-semibold underline text-blue-600' : ''
+                    }`}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    Testimonials
+                  </Link>
+                </div>
+              )}
           </div>
 
-          <Link href="/#services" className={`hover:underline underline-offset-4 hover:text-blue-200 transition-colors font-medium ${activeSection === 'services' ? activeLink : ''}`}>Services</Link>
-          <Link href="/#pricing" className={`hover:underline underline-offset-4 hover:text-blue-200 transition-colors font-medium ${activeSection === 'pricing' ? activeLink : ''}`}>Pricing</Link>
-          <Link href="/#contact" className={`hover:underline underline-offset-4 hover:text-blue-200 transition-colors font-medium ${activeSection === 'contact' ? activeLink : ''}`}>Contact</Link>
+          <Link
+            href="/#services"
+            className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium ${
+              activeSection === 'services' ? activeLink : 'text-white'
+            }`}
+          >
+            Services
+          </Link>
+          <Link
+            href="/#pricing"
+            className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium ${
+              activeSection === 'pricing' ? activeLink : 'text-white'
+            }`}
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/#contact"
+            className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium ${
+              activeSection === 'contact' ? activeLink : 'text-white'
+            }`}
+          >
+            Contact
+          </Link>
         </div>
 
         {/* Mobile Navigation */}
@@ -171,7 +252,7 @@ export default function Header() {
                   onClick={() => setIsMobileAboutOpen((open) => !open)}
                   aria-expanded={isMobileAboutOpen}
                 >
-                  <span>About</span>
+                  <span>{aboutLabel}</span>
                   <svg
                     className={`w-4 h-4 transform transition-transform duration-200 ${isMobileAboutOpen ? 'rotate-180' : 'rotate-0'}`}
                     fill="none"
@@ -188,7 +269,7 @@ export default function Header() {
                       className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'about' ? activeLink : ''}`}
                       onClick={() => { setIsMobileMenuOpen(false); setIsMobileAboutOpen(false); }}
                     >
-                      About Us
+                      About
                     </Link>
                     <Link 
                       href="/#case-studies" 
