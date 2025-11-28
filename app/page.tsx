@@ -10,6 +10,7 @@ import Testimonials from '@/components/landing/Testimonials';
 import CaseStudies from '@/components/landing/CaseStudies';
 import Header from '@/components/landing/Header';
 import AnimatedSection from '@/components/landing/AnimatedSection';
+import SectionTracker from '@/components/landing/SectionTracker';
 
 export const metadata: Metadata = {
   title: 'Ship Happpens | Your Trusted Supply Chain Partner',
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <SectionTracker />
       <Header />
       <main className="min-h-screen">
         <AnimatedSection>

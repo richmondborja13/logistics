@@ -22,6 +22,7 @@ Integration Notes:
 "use client";
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
+import { Building2, Briefcase, BookOpen, MessageSquare, Package, DollarSign, HelpCircle } from 'lucide-react';
 
 const SECTION_IDS = [
   'hero',
@@ -29,23 +30,106 @@ const SECTION_IDS = [
   'case-studies',
   'blog',
   'testimonials',
+  'faq',
   'services',
   'pricing',
   'contact',
 ];
 
+const servicesItems = [
+  'Transportation',
+  'Warehousing',
+  'International Shipping',
+  'Last-Mile Delivery',
+  'Route Optimization',
+  'Supply Chain Security',
+];
+
+const pricingItems = [
+  'Basic',
+  'Professional',
+  'Enterprise',
+];
+
+const aboutDropdownItems = [
+  {
+    id: 'about',
+    title: 'About',
+    description: 'Learn about our company and mission',
+    icon: Building2,
+    href: '/#about',
+  },
+  {
+    id: 'case-studies',
+    title: 'Case Studies',
+    description: 'Explore our successful logistics solutions',
+    icon: Briefcase,
+    href: '/#case-studies',
+  },
+  {
+    id: 'blog',
+    title: 'Blog',
+    description: 'Read the latest logistics insights and news',
+    icon: BookOpen,
+    href: '/#blog',
+  },
+  {
+    id: 'testimonials',
+    title: 'Testimonials',
+    description: 'See what our clients say about us',
+    icon: MessageSquare,
+    href: '/#testimonials',
+  },
+  {
+    id: 'faq',
+    title: 'FAQ',
+    description: 'Find answers to frequently asked questions',
+    icon: HelpCircle,
+    href: '/#faq',
+  },
+];
+
+const servicesPricingDropdownItems = [
+  {
+    id: 'services',
+    title: 'Services',
+    description: 'Comprehensive logistics solutions for your business',
+    icon: Package,
+    href: '/#services',
+  },
+  {
+    id: 'pricing',
+    title: 'Pricing',
+    description: 'Transparent pricing plans tailored to your needs',
+    icon: DollarSign,
+    href: '/#pricing',
+  },
+];
+
+const mobileNavItems = [
+  { id: 'hero', label: 'Home', href: '/#hero' },
+  { id: 'contact', label: 'Contact', href: '/#contact' },
+];
+
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isServicesPricingDropdownOpen, setIsServicesPricingDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
+  const [isMobileServicesPricingOpen, setIsMobileServicesPricingOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [aboutLabelOverride, setAboutLabelOverride] = useState<string | null>(null);
+  const [servicesPricingLabelOverride, setServicesPricingLabelOverride] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const servicesPricingDropdownRef = useRef<HTMLDivElement>(null);
 
   // Intersection Observer for active section
   useEffect(() => {
     const handleScroll = () => {
       let found = false;
-      for (const id of SECTION_IDS) {
+      const allIds = [...SECTION_IDS];
+      
+      for (const id of allIds) {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
@@ -62,6 +146,34 @@ export default function Header() {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Clear label override when active section is one of the about dropdown sections
+  // This allows the label to update dynamically based on scroll position
+  useEffect(() => {
+    const aboutSectionIds = aboutDropdownItems.map(item => item.id);
+    if (aboutSectionIds.includes(activeSection)) {
+      setAboutLabelOverride(null);
+    }
+  }, [activeSection]);
+
+  // Ensure mobile accordions reflect the current active section
+  useEffect(() => {
+    const aboutSectionIds = aboutDropdownItems.map((item) => item.id);
+    if (aboutSectionIds.includes(activeSection)) {
+      setIsMobileAboutOpen(true);
+    }
+    if (['services', 'pricing'].includes(activeSection)) {
+      setIsMobileServicesPricingOpen(true);
+    }
+  }, [activeSection]);
+
+  // Reset mobile accordions when menu closes
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      setIsMobileAboutOpen(false);
+      setIsMobileServicesPricingOpen(false);
+    }
+  }, [isMobileMenuOpen]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -85,21 +197,61 @@ export default function Header() {
     };
   }, [isDropdownOpen]);
 
+  // Close Services/Pricing dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        servicesPricingDropdownRef.current &&
+        event.target instanceof Node &&
+        servicesPricingDropdownRef.current.contains(event.target)
+      ) {
+        return;
+      }
+      setIsServicesPricingDropdownOpen(false);
+    }
+    if (isServicesPricingDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isServicesPricingDropdownOpen]);
+
   // Helper for active link style (only visual state, sizing handled in base classes)
   const activeLink =
     'bg-white text-blue-700 font-semibold shadow-sm';
 
-  const aboutLabel =
-    activeSection === 'case-studies'
+  const aboutLabel = aboutLabelOverride
+    ? aboutLabelOverride
+    : activeSection === 'case-studies'
       ? 'Case Studies'
       : activeSection === 'blog'
       ? 'Blog'
       : activeSection === 'testimonials'
       ? 'Testimonials'
+      : activeSection === 'faq'
+      ? 'FAQ'
       : 'About';
 
+  const getServicesPricingLabel = () => {
+    if (activeSection === 'pricing') {
+      return 'Pricing';
+    }
+    return 'Services';
+  };
+
+  const servicesPricingLabel =
+    servicesPricingLabelOverride ?? getServicesPricingLabel();
+
+  const isAboutSectionActive = aboutDropdownItems.some((item) => item.id === activeSection);
+  const isServicesPricingSectionActive = servicesPricingDropdownItems.some(
+    (item) => item.id === activeSection
+  );
+
   return (
-    <header className="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-900 to-blue-700 text-white shadow z-50">
+    <header className="fixed top-0 left-0 w-full bg-blue-900 text-white shadow z-50">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <div className="text-2xl font-bold tracking-tight">Ship Happens</div>
 
@@ -147,7 +299,7 @@ export default function Header() {
           <div className="relative" ref={dropdownRef}>
             <button
               className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium flex items-center gap-1 focus:outline-none ${
-                ['about', 'case-studies', 'blog', 'testimonials'].includes(activeSection)
+                ['about', 'case-studies', 'blog', 'testimonials', 'faq'].includes(activeSection)
                   ? activeLink
                   : 'text-white'
               }`}
@@ -167,63 +319,113 @@ export default function Header() {
               </svg>
             </button>
               {isDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50">
+                  {aboutDropdownItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = activeSection === item.id;
+                    return (
                   <Link
-                    href="/#about"
-                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
-                      activeSection === 'about' ? 'font-semibold underline text-blue-600' : ''
+                        key={item.id}
+                        href={item.href}
+                        className={`block px-4 py-3 hover:bg-blue-50 transition-colors ${
+                          isActive ? 'bg-blue-50' : ''
                     }`}
-                    onClick={() => setIsDropdownOpen(false)}
+                    onClick={() => {
+                      setAboutLabelOverride(item.title);
+                      setIsDropdownOpen(false);
+                    }}
                   >
-                    About
+                        <div className="flex items-start gap-3">
+                          <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
+                            isActive ? 'bg-blue-100' : 'bg-gray-100'
+                          }`}>
+                            <Icon className={`w-5 h-5 ${
+                              isActive ? 'text-blue-600' : 'text-gray-600'
+                            }`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className={`font-semibold text-sm mb-1 ${
+                              isActive ? 'text-blue-600' : 'text-gray-900'
+                            }`}>
+                              {item.title}
+                            </div>
+                            <div className="text-xs text-gray-600 line-clamp-2">
+                              {item.description}
+                            </div>
+                          </div>
+                        </div>
                   </Link>
-                  <Link
-                    href="/#case-studies"
-                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
-                      activeSection === 'case-studies' ? 'font-semibold underline text-blue-600' : ''
-                    }`}
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    Case Studies
-                  </Link>
-                  <Link
-                    href="/#blog"
-                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
-                      activeSection === 'blog' ? 'font-semibold underline text-blue-600' : ''
-                    }`}
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    Blog
-                  </Link>
-                  <Link
-                    href="/#testimonials"
-                    className={`block px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
-                      activeSection === 'testimonials' ? 'font-semibold underline text-blue-600' : ''
-                    }`}
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    Testimonials
-                  </Link>
+                    );
+                  })}
                 </div>
               )}
           </div>
 
-          <Link
-            href="/#services"
-            className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium ${
-              activeSection === 'services' ? activeLink : 'text-white'
+          {/* Services & Pricing Merged Dropdown */}
+          <div className="relative" ref={servicesPricingDropdownRef}>
+            <button
+              className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium flex items-center gap-1 focus:outline-none ${
+                activeSection === 'services' || activeSection === 'pricing'
+                  ? activeLink
+                  : 'text-white'
             }`}
-          >
-            Services
-          </Link>
+              onClick={() => setIsServicesPricingDropdownOpen((open) => !open)}
+              aria-expanded={isServicesPricingDropdownOpen}
+            >
+              {servicesPricingLabel}
+              <svg
+                className={`w-4 h-4 transform transition-transform duration-200 ${
+                  isServicesPricingDropdownOpen ? 'rotate-180' : 'rotate-0'
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {isServicesPricingDropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50">
+                {servicesPricingDropdownItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeSection === item.id;
+                  return (
           <Link
-            href="/#pricing"
-            className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium ${
-              activeSection === 'pricing' ? activeLink : 'text-white'
-            }`}
-          >
-            Pricing
+                      key={item.id}
+                      href={item.href}
+                      className={`block px-4 py-3 hover:bg-blue-50 transition-colors ${
+                        isActive ? 'bg-blue-50' : ''
+                      }`}
+                    onClick={() => {
+                      setServicesPricingLabelOverride(item.title);
+                      setIsServicesPricingDropdownOpen(false);
+                    }}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
+                          isActive ? 'bg-blue-100' : 'bg-gray-100'
+                        }`}>
+                          <Icon className={`w-5 h-5 ${
+                            isActive ? 'text-blue-600' : 'text-gray-600'
+                          }`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className={`font-semibold text-sm mb-1 ${
+                            isActive ? 'text-blue-600' : 'text-gray-900'
+                          }`}>
+                            {item.title}
+                          </div>
+                          <div className="text-xs text-gray-600 line-clamp-2">
+                            {item.description}
+                          </div>
+                        </div>
+                      </div>
           </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
           <Link
             href="/#contact"
             className={`px-4 py-1 rounded-full hover:bg-white/10 hover:text-white transition-colors font-medium ${
@@ -236,87 +438,124 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-gradient-to-r from-blue-900 to-blue-700 shadow-lg z-50">
-            <div className="px-4 py-2 space-y-1">
-              <Link 
-                href="/#hero" 
-                className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'hero' ? activeLink : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-              {/* Collapsible About Dropdown */}
-              <div>
-                <button
-                  className={`w-full flex items-center justify-between font-medium py-2 focus:outline-none ${['about','case-studies','blog','testimonials'].includes(activeSection) ? activeLink : ''}`}
-                  onClick={() => setIsMobileAboutOpen((open) => !open)}
-                  aria-expanded={isMobileAboutOpen}
-                >
-                  <span>{aboutLabel}</span>
-                  <svg
-                    className={`w-4 h-4 transform transition-transform duration-200 ${isMobileAboutOpen ? 'rotate-180' : 'rotate-0'}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <div className="lg:hidden fixed inset-0 z-50">
+            <div
+              className="absolute inset-0 bg-black/40"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <div className="absolute top-0 right-0 h-full w-72 max-w-[80vw] bg-white text-gray-900 shadow-2xl rounded-l-3xl mobile-menu-slide px-6 py-6 space-y-4 overflow-y-auto">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-lg font-semibold">Menu</span>
+                <button onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
-                {isMobileAboutOpen && (
-                  <div className="pl-4 space-y-1">
-                    <Link 
-                      href="/#about" 
-                      className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'about' ? activeLink : ''}`}
-                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileAboutOpen(false); }}
-                    >
-                      About
-                    </Link>
-                    <Link 
-                      href="/#case-studies" 
-                      className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'case-studies' ? activeLink : ''}`}
-                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileAboutOpen(false); }}
-                    >
-                      Case Studies
-                    </Link>
-                    <Link 
-                      href="/#blog" 
-                      className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'blog' ? activeLink : ''}`}
-                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileAboutOpen(false); }}
-                    >
-                      Blog
-                    </Link>
-                    <Link 
-                      href="/#testimonials" 
-                      className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'testimonials' ? activeLink : ''}`}
-                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileAboutOpen(false); }}
-                    >
-                      Testimonials
-                    </Link>
-                  </div>
-                )}
               </div>
 
-              <Link 
-                href="/#services" 
-                className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'services' ? activeLink : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Services
-              </Link>
-              <Link 
-                href="/#pricing" 
-                className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'pricing' ? activeLink : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Pricing
-              </Link>
-              <Link 
-                href="/#contact" 
-                className={`block py-2 hover:text-blue-200 transition-colors ${activeSection === 'contact' ? activeLink : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Contact
-              </Link>
+              <div className="space-y-2">
+                {mobileNavItems.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className={`flex items-center py-2 hover:text-blue-600 transition-colors ${
+                        isActive ? 'text-blue-600 font-semibold' : ''
+                      }`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className="flex-1 text-left">{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="pt-4 border-t border-gray-200 space-y-3">
+                <div>
+                  <button
+                    className={`w-full flex items-center justify-between py-2 text-left font-semibold ${
+                      isAboutSectionActive ? 'text-blue-600' : ''
+                    }`}
+                    onClick={() => setIsMobileAboutOpen((open) => !open)}
+                    aria-expanded={isMobileAboutOpen}
+                  >
+                    <span>About</span>
+                    <svg
+                      className={`w-4 h-4 transition-transform ${isMobileAboutOpen ? 'rotate-180' : 'rotate-0'}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {isMobileAboutOpen && (
+                    <div className="ml-3 space-y-2">
+                      {aboutDropdownItems.map((item) => {
+                        const isActive = activeSection === item.id;
+                        return (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            className={`flex items-center py-1.5 text-sm hover:text-blue-600 transition-colors ${
+                              isActive ? 'text-blue-600 font-semibold' : 'text-gray-700'
+                            }`}
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setIsMobileAboutOpen(false);
+                            }}
+                          >
+                            <span>{item.title}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <button
+                    className={`w-full flex items-center justify-between py-2 text-left font-semibold ${
+                      isServicesPricingSectionActive ? 'text-blue-600' : ''
+                    }`}
+                    onClick={() => setIsMobileServicesPricingOpen((open) => !open)}
+                    aria-expanded={isMobileServicesPricingOpen}
+                  >
+                    <span>Services & Pricing</span>
+                    <svg
+                      className={`w-4 h-4 transition-transform ${isMobileServicesPricingOpen ? 'rotate-180' : 'rotate-0'}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {isMobileServicesPricingOpen && (
+                    <div className="ml-3 space-y-2">
+                      {servicesPricingDropdownItems.map((item) => {
+                        const isActive = activeSection === item.id;
+                        return (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            className={`flex items-center py-1.5 text-sm hover:text-blue-600 transition-colors ${
+                              isActive ? 'text-blue-600 font-semibold' : 'text-gray-700'
+                            }`}
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setIsMobileServicesPricingOpen(false);
+                            }}
+                          >
+                            <span>{item.title}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         )}

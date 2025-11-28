@@ -30,34 +30,35 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center bg-gradient-to-r from-blue-900 to-blue-700 text-white"
+      className="relative min-h-screen flex items-center bg-blue-900 text-white pt-20 md:pt-0"
+      style={{ minHeight: '100vh' }}
     >
-      <div className="max-w-7xl mx-auto px-10 py-15">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center justify-start">
-          <div className="space-y-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 py-8 md:py-15 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center justify-start">
+          <div className="space-y-6 md:space-y-8">
+            <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Revolutionize Your Logistics for a Smarter Supply Chain
             </h1>
-            <p className="text-xl text-blue-100">
+            <p className="text-base sm:text-lg md:text-xl text-blue-100">
               Optimize your operations with our comprehensive logistics services. From warehousing to last-mile
               delivery, we&apos;ve got you covered.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-row gap-3 sm:gap-4">
               <Link
                 href="/registration"
-                className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-center"
+                className="flex-1 bg-white text-blue-900 px-4 sm:px-6 md:px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-center"
               >
                 Get Started
               </Link>
               <Link
                 href="/services"
-                className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors text-center"
+                className="flex-1 border-2 border-white px-4 sm:px-6 md:px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors text-center"
               >
                 Learn More
               </Link>
             </div>
           </div>
-          <div className="relative h-[400px] md:h-[500px] ml-8 md:ml-16">
+          <div className="relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] mt-8 md:mt-0 md:ml-8 lg:ml-16">
             <LottieAnimation />
           </div>
         </div>

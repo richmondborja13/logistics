@@ -68,8 +68,8 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-20">
-      <div className="container mx-auto px-4">
+    <section id="pricing" className="py-20 min-h-screen flex items-center bg-white">
+      <div className="container mx-auto px-4 w-full">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Transparent Pricing
@@ -83,6 +83,7 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
+              id={`pricing-${plan.name.toLowerCase()}`}
               className={`bg-white rounded-xl shadow-lg overflow-hidden ${
                 plan.popular ? 'ring-2 ring-blue-600' : ''
               }`}

@@ -40,8 +40,8 @@ const values = [
 
 export default function About() {
   return (
-    <section id="about" className="py-20">
-      <div className="container mx-auto px-4">
+    <section id="about" className="py-20 min-h-screen flex items-center bg-white">
+      <div className="container mx-auto px-4 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative h-[550px] w-full">
             <Image
