@@ -463,7 +463,6 @@ const Orders: React.FC = () => {
     const openFilterModal = () => {
       setModalStatus(filterStatus);
       setModalRegion(filterRegion);
-      setModalDateRange(filterDateRange);
       setModalCategory(filterCategory);
       setIsFilterModalOpen(true);
     };
@@ -701,7 +700,6 @@ const Orders: React.FC = () => {
                                 onClick={() => {
                                     setFilterStatus(modalStatus);
                                     setFilterRegion(modalRegion);
-                                    setFilterDateRange(filterDateRange); // Keep existing date range filter
                                     setFilterCategory(modalCategory);
                                     setIsFilterModalOpen(false);
                                 }}
