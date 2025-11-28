@@ -25,6 +25,7 @@ Integration Notes:
 */
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
@@ -287,7 +288,14 @@ const Documents = () => {
                 <ul className="divide-y divide-gray-100 max-h-96 overflow-y-auto">
                   {filteredNotifications.map((notif) => (
                     <li key={notif.id} className="flex items-start gap-3 px-6 py-4 hover:bg-gray-50 transition">
-                      <img src={notif.avatar} alt={notif.name} className="w-10 h-10 rounded-full object-cover mt-1" />
+                      <Image
+                        src={notif.avatar}
+                        alt={notif.name}
+                        width={40}
+                        height={40}
+                        className="w-10 h-10 rounded-full object-cover mt-1"
+                        unoptimized
+                      />
                       <div className="flex-1">
                         <div className="text-sm">
                           <span className={`font-semibold ${notif.nameColor}`}>{notif.name}</span>

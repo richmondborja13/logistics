@@ -155,7 +155,7 @@ const LoginForm: React.FC = () => {
                         Login
                     </button>
                     <div className="text-sm text-center">
-                        Don't have an account?{' '}
+                        Don&apos;t have an account?{' '}
                         <button 
                             type="button" 
                             onClick={handleRegisterClick}

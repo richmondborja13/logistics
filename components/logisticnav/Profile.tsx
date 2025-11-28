@@ -24,6 +24,7 @@ Integration Notes:
 */
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 const mockUser = {
@@ -60,7 +61,14 @@ const Profile = () => {
       {/* 1. Profile Photo/Name/Email/Company Info */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-6">
         <div className="flex items-center gap-6">
-          <img src={mockUser.avatar} alt={mockUser.name} className="w-24 h-24 rounded-full object-cover" />
+          <Image
+            src={mockUser.avatar}
+            alt={mockUser.name}
+            width={96}
+            height={96}
+            className="w-24 h-24 rounded-full object-cover"
+            unoptimized
+          />
           <div>
             <div className="text-2xl font-bold">{mockUser.name}</div>
             <div className="text-gray-500">{mockUser.email}</div>
