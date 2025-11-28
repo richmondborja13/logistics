@@ -287,7 +287,7 @@ const Reports = () => {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <h3 className="text-lg font-semibold mb-4">Monthly Trends</h3>
           <div className="space-y-4">
-            {mockReportData.monthlyData.map((data, index) => (
+            {mockReportData.monthlyData.map((data) => (
               <div key={data.month} className="flex items-center">
                 <div className="w-12 text-sm font-medium text-gray-600">{data.month}</div>
                 <div className="flex-1 ml-4">

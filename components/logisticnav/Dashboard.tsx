@@ -24,54 +24,6 @@ Integration Notes:
 import React, { useState } from 'react';
 // Import mock data from other files (copy here for simplicity)
 
-// --- Mock Data (from Reports.tsx) ---
-const mockReportData = {
-  overview: {
-    totalOrders: 1247,
-    totalRevenue: 284750,
-    avgDeliveryTime: 2.3,
-    customerSatisfaction: 4.6,
-  },
-};
-
-// --- Mock Data (from LogisticProvider.tsx) ---
-const mockShipments = [
-  {
-    id: '1',
-    number: 'NA-202312345',
-    status: 'In transit',
-    category: 'Food',
-    departure: '12-2-22',
-    arrival: '17-2-22',
-    driver: 'Mr. John',
-    region: 'North America',
-  },
-  {
-    id: '2',
-    number: 'EU-202312346',
-    status: 'Completed',
-    category: 'Clothes',
-    departure: '10-2-22',
-    arrival: '15-2-22',
-    driver: 'Ms. Jane',
-    region: 'Europe',
-  },
-];
-
-// --- Mock Data (from Documents.tsx) ---
-const mockDocuments = [
-  {
-    id: 1,
-    name: 'Invoice_2024_001.pdf',
-    type: 'Invoice',
-    orderId: 'ORD-2024-001',
-    uploadedBy: 'John Smith',
-    dateUploaded: '2024-01-15',
-    status: 'Approved',
-    size: '2.3 MB',
-  },
-];
-
 // --- Mock Data for Tasks, Budget, Locations, Tips ---
 const mockTasks = [
   {

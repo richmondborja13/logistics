@@ -27,7 +27,6 @@ Integration Notes:
 import * as React from "react";
 import { useState, useMemo } from 'react';
 import { FiSearch, FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import Navbar from '@/components/logisticnav/Navbar';
 
 type Region = 'North America' | 'Europe' | 'Asia Pacific';
 
@@ -349,7 +348,6 @@ const Orders: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortField, setSortField] = useState<SortField>('orderDate');
     const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
-    const [dateRange, setDateRange] = useState({ start: '', end: '' });
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(1);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -360,7 +358,6 @@ const Orders: React.FC = () => {
     // Modal temp state for filter modal
     const [modalStatus, setModalStatus] = useState<string>('');
     const [modalRegion, setModalRegion] = useState<string>('');
-    const [modalDateRange, setModalDateRange] = useState<{ start: string; end: string }>({ start: '', end: '' });
     const [modalCategory, setModalCategory] = useState<string>('');
 
     const [showNotifications, setShowNotifications] = useState(false);

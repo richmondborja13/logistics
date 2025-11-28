@@ -71,7 +71,7 @@ export default function CaseStudies() {
             Success Stories
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            See how we've helped businesses transform their logistics operations
+            See how we&apos;ve helped businesses transform their logistics operations
           </p>
         </div>
 

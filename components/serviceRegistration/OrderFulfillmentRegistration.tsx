@@ -162,7 +162,7 @@ const OrderFulfillmentRegistration: React.FC = () => {
                             <ul className="list-disc list-inside ml-5 mt-1 space-y-1">
                                 <li>Full name, address, contact details</li>
                                 <li>Date of birth, age, height, and weight</li>
-                                <li>Government-issued IDs (driver's license, SSS, PhilHealth, etc.)</li>
+                                <li>Government-issued IDs (driver&rsquo;s license, SSS, PhilHealth, etc.)</li>
                                 <li>Employment history, training records, and certifications</li>
                                 <li>Medical results including drug and alcohol screening</li>
                                 <li>Any other information relevant to my employment profile</li>

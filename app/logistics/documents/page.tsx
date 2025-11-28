@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from '@/components/logisticnav/Navbar';
 import Documents from '@/components/logisticnav/Documents';
-import Head from 'next/head';
 
 const DocumentsPage = () => {
     return (

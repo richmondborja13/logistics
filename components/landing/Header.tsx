@@ -36,21 +36,6 @@ const SECTION_IDS = [
   'contact',
 ];
 
-const servicesItems = [
-  'Transportation',
-  'Warehousing',
-  'International Shipping',
-  'Last-Mile Delivery',
-  'Route Optimization',
-  'Supply Chain Security',
-];
-
-const pricingItems = [
-  'Basic',
-  'Professional',
-  'Enterprise',
-];
-
 const aboutDropdownItems = [
   {
     id: 'about',

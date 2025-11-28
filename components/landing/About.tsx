@@ -60,7 +60,7 @@ export default function About() {
                 Your Trusted Logistics Partner
               </h2>
               <p className="text-xl text-gray-600">
-                With over 15 years of experience, we've been at the forefront of logistics innovation, helping businesses streamline their supply chains and achieve operational excellence.
+                With over 15 years of experience, we&apos;ve been at the forefront of logistics innovation, helping businesses streamline their supply chains and achieve operational excellence.
               </p>
             </div>
 

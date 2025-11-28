@@ -27,7 +27,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-    Home,Search,Package,FileText,BarChart,Users,LogOut,ChevronLeft,ChevronRight
+    Home,Search,Package,FileText,BarChart,LogOut,ChevronLeft,ChevronRight
 } from 'lucide-react';
 
 interface NavbarProps {

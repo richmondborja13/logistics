@@ -288,7 +288,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            <div className="font-medium text-gray-700 mb-1">Driver's License</div>
+            <div className="font-medium text-gray-700 mb-1">Driver&rsquo;s License</div>
             <div className="flex items-center gap-2">
               <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-medium">Pending</span>
               <button className="text-blue-600 text-xs font-medium hover:underline">Upload</button>

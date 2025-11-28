@@ -90,7 +90,6 @@ export default function SectionTracker() {
 
   useEffect(() => {
     const handleScroll = () => {
-      let found = false;
       
       for (const id of SECTION_IDS) {
         const el = document.getElementById(id);
@@ -119,7 +118,6 @@ export default function SectionTracker() {
                 }
               }, SECTION_STAY_TIME);
             }
-            found = true;
             break;
           }
         }

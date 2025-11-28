@@ -29,7 +29,18 @@ import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
 // --- Mock data for documents (Front-end: update for demo, Back-end: replace with API) ---
-const mockDocuments = [
+type DocumentRecord = {
+  id: number;
+  name: string;
+  type: string;
+  orderId: string;
+  uploadedBy: string;
+  dateUploaded: string;
+  status: string;
+  size: string;
+};
+
+const mockDocuments: DocumentRecord[] = [
   {
     id: 1,
     name: 'Invoice_2024_001.pdf',
@@ -136,7 +147,7 @@ const mockNotifications = [
 
 const Documents = () => {
   // --- State variables (Front-end: local state, Back-end: move to global state if needed) ---
-  const [documents, setDocuments] = useState(mockDocuments);
+  const [documents, setDocuments] = useState<DocumentRecord[]>(mockDocuments);
   const [sortField, setSortField] = useState('dateUploaded');
   const [sortDirection, setSortDirection] = useState('desc');
   const [searchTerm, setSearchTerm] = useState('');
@@ -149,8 +160,7 @@ const Documents = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<any>(null);
-  const [showDropdown, setShowDropdown] = useState<number | null>(null);
+  const [selectedDocument, setSelectedDocument] = useState<DocumentRecord | null>(null);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifFilter, setNotifFilter] = useState<'all' | 'unread' | 'read'>('all');
   // Add read/unread status to notifications for filtering
@@ -215,13 +225,11 @@ const Documents = () => {
 
   const handleDelete = (id: number) => {
     setDocuments(documents.filter(doc => doc.id !== id));
-    setShowDropdown(null);
   };
 
-  const handleView = (document: any) => {
+  const handleView = (document: DocumentRecord) => {
     setSelectedDocument(document);
     setIsViewerOpen(true);
-    setShowDropdown(null);
   };
 
   const getStatusColor = (status: string) => {
